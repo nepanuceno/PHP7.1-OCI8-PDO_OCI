@@ -1,0 +1,63 @@
+Instalar PHP7 e Apache com os seguintes módulos:
+
+    OpenSSL PHP Extension
+    PDO PHP Extension
+    Mbstring PHP Extension
+    Tokenizer PHP Extension
+    XML PHP Extension
+
+Verificar se está tudo funcionado
+
+Instalar sudo apt-get install libaio1 libaio-dev
+
+Baixar o pacote do PHP7 no Site oficial e descomprimi-lo na home do usuário.
+
+Certificar-se que o instantclient seja a última versao 11.2 e esteja configurado corretamente. Verifique a versão correta para o seu OS. (ex: Linux x86-64)
+
+OBS: É necessario que seja a versão 11.2 do instantclient
+
+
+
+Execute os comandos:
+cd ~/php/ext/pdo_oci
+
+phpize
+./configure --with-pdo-oci=instantclient,/opt/oracle/instantclient,11.2
+make clean
+make
+make test
+sudo make install
+
+Execute os comandos:
+cd ~/php/ext/oci8
+
+phpize
+./configure --with-oci8=shared,instantclient,/opt/oracle/instantclient,11.2
+make clean
+make
+make test
+sudo make install
+
+Observar no phpinfo() os seguintes dados:
+Loaded Configuration File 	/etc/php/7.0/apache2/php.ini
+Scan this dir for additional .ini files 	/etc/php/7.0/apache2/conf.d 
+
+Ao certificar-se do PATH do sistema, adicionar as seguintes linhas ao final do php.ini
+	extension=oci8.so
+	extension=pdo_oci.so
+
+Entrar no /etc/php/7.*/mods_avaliable
+Dentro desse diretório, criar os seguintes arquivos:
+	pdo_oci.ini e dentro dele colocar o seguinte: extension=pdo_oci.so
+	oci8.ini e dentro dele colocar o seguinte: extension=oci8.so
+
+E finalmente acessar  /etc/php/7.*/apache2/conf.d/
+Dentro do diretório, criar dois links com o comando:
+	ln -s /ect/php/7.0/mods-avaliable/pdo_oci.ini 10-pdo_oci.ini
+	ln -s /ect/php/7.0/mods-avaliable/oci8.ini 10-oci8.ini
+
+Por fim, reinicie o Apache2
+	sudo service apache2 restart
+
+Verifique com o comando: 
+ php -m
