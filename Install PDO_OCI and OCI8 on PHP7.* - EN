@@ -46,15 +46,15 @@ When making sure the system PATH, add the following lines to the end of php.ini
 extension=oci8.so
 extension=pdo_oci.so
 
-Log in to /etc/php/7.*/mods_avaliable
+Log in to /etc/php/7.*/mods_available
 Within this directory, create the following files:
 pdo_oci.ini and put the following into it: extension=pdo_oci.so
 oci8.ini and within it put the following: extension=oci8.so
 
 And finally access /etc/php/7.*/apache2/conf.d/
 Within the directory, create two links with the command:
-ln -s /ect/php/7.*/mods-avaliable/pdo_oci.ini 10-pdo_oci.ini
-ln -s /ect/php/7.*/mods-avaliable/oci8.ini 10-oci8.ini
+ln -s /etc/php/7.*/mods-available/pdo_oci.ini 10-pdo_oci.ini
+ln -s /etc/php/7.*/mods-available/oci8.ini 10-oci8.ini
 
 Finally, restart Apache2
 sudo service apache2 restart
